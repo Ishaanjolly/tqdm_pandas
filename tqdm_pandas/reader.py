@@ -59,19 +59,24 @@ def _wrap_file(file, desc=None):
         return TqdmFileReader(file, desc=desc)
     return file
 
-def read_csv_with_progress(filepath_or_buffer, desc=None, **kwargs):
-    with _wrap_file(filepath_or_buffer, desc=desc or "Reading CSV") as f:
+def read_csv_with_progress_std(source, desc=None, **kwargs):
+    with _wrap_file(source, desc=desc or "Reading CSV") as f:
         return pd.read_csv(f, **kwargs)
 
-def read_json_with_progress(path_or_buf, desc=None, **kwargs):
-    with _wrap_file(path_or_buf, desc=desc or "Reading JSON") as f:
+def read_json_with_progress_std(source, desc=None, **kwargs):
+    with _wrap_file(source, desc=desc or "Reading JSON") as f:
         return pd.read_json(f, **kwargs)
 
-def read_table_with_progress(filepath_or_buffer, desc=None, **kwargs):
-    with _wrap_file(filepath_or_buffer, desc=desc or "Reading Table") as f:
+def read_table_with_progress_std(source, desc=None, **kwargs):
+    with _wrap_file(source, desc=desc or "Reading Table") as f:
         return pd.read_table(f, **kwargs)
     
-def read_excel_with_progress(io, desc=None, **kwargs):
-    """Read an Excel file with a progress bar."""
-    with _wrap_file(io, desc=desc or "Reading Excel") as f:
+def read_excel_with_progress_std(source, desc=None, **kwargs):
+    with _wrap_file(source, desc=desc or "Reading Excel") as f:
         return pd.read_excel(f, **kwargs)
+    
+def read_parquet_with_progress_std(source, desc=None, **kwargs):
+    with _wrap_file(source, desc=desc or "Reading Parquet") as f:
+        return pd.read_parquet(f, **kwargs)
+    
+    
