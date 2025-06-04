@@ -30,4 +30,5 @@ jobs:
         # Add timestamp to version for TestPyPI
         TIMESTAMP=$(date +%Y%m%d%H%M%S)
         sed -i "s/version = \".*\"/version = \"0.1.0.dev${TIMESTAMP}\"/" pyproject.toml
+        python -m build
         twine upload --repository testpypi dist/* --verbose
