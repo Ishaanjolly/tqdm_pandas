@@ -26,4 +26,8 @@ jobs:
       env:
         TWINE_USERNAME: __token__
         TWINE_PASSWORD: ${{secrets.TEST_PYPI_API_TOKEN }}
-      run: twine upload --repository testpypi dist/* --verbose
+      run: |
+        # Add timestamp to version for TestPyPI
+        TIMESTAMP=$(date +%Y%m%d%H%M%S)
+        sed -i "s/version = \".*\"/version = \"0.1.0.dev${TIMESTAMP}\"/" pyproject.toml
+        twine upload --repository testpypi dist/* --verbose
