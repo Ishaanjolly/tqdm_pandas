@@ -1,4 +1,8 @@
-# tdqm_pandas: pandas progress reader
+# tqdm_pandas 
+
+A simple package to add a progress bar to pandas read functions using tqdm.
+
+## Context
 
 I've often found myself needing to read a large file with pandas and have been left frustated over 
 how long it takes to read the file. This package provides a simple way to add a progress bar to the reading of files
