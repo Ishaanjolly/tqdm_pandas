@@ -156,3 +156,9 @@ cython_debug/
 
 .DS_Store
 .vscode 
+
+*.csv 
+*.xlsx 
+*.json 
+*.parquet 
+*.sql
