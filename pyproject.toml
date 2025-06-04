@@ -28,7 +28,7 @@ build-backend = "setuptools.build_meta"
 # Version management
 version_toml = ["pyproject.toml:tool.poetry.version"]
 version_variables = [
-    "opttest/__init__.py:__version__"
+    "opttest/__init__.py:__version__"]
 
 # Branch configuration
 branch = "main"
