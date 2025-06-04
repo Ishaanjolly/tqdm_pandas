@@ -41,6 +41,11 @@ changelog_file = "CHANGELOG.md"
 commit_parser = "angular"
 logging_use_named_masks = false
 
+# Remote configuration
+[tool.semantic_release.remote]
+name = "origin"
+type = "github"
+
 # Commit message template
 [tool.semantic_release.commit_author]
 env = "GIT_COMMIT_AUTHOR"
@@ -52,7 +57,4 @@ allowed_tags = ["build", "chore", "ci", "docs", "feat", "fix", "perf", "style", 
 minor_tags = ["feat"]
 patch_tags = ["fix", "perf"]
 
-[tool.semantic_release.publish]
-dist_glob_patterns = ["dist/*"]
-upload_to_vcs_release = true
 
