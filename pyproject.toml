@@ -28,7 +28,7 @@ build-backend = "setuptools.build_meta"
 # Version management
 version_toml = ["pyproject.toml:tool.poetry.version"]
 version_variables = [
-    "opttest/__init__.py:__version__"]
+    "tqdm_pandas/__init__.py:__version__"]
 
 # Branch configuration
 branch = "main"
@@ -36,7 +36,6 @@ upload_to_vcs_release = true
 
 # Changelog configuration
 changelog_file = "CHANGELOG.md"
-changelog_placeholder = "<!--next-version-->"
 
 # Commit message parsing
 commit_parser = "angular"
