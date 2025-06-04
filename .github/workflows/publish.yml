@@ -1,8 +1,8 @@
-name: Publish to PyPI
+name: Publish to TestPyPI
 
 on:
   push:
-    branches: [main, dev]
+    branches: [main, dev ]
 
 jobs:
   ci:
