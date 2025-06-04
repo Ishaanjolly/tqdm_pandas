@@ -57,4 +57,8 @@ allowed_tags = ["build", "chore", "ci", "docs", "feat", "fix", "perf", "style", 
 minor_tags = ["feat"]
 patch_tags = ["fix", "perf"]
 
+[tool.semantic_release.publish]
+dist_glob_patterns = ["dist/*"]
+upload_to_vcs_release = true
+
 
