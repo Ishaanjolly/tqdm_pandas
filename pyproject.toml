@@ -1,7 +1,7 @@
 [project]
 
 name = "tqdm-pandas"
-version = "0.1.0"
+version = "0.1.0.dev1"
 description = "Progress bar for pandas file reading operationa"
 authors = [
     {name = "IshaanJolly",email = "ijolly1997@gmail.com"}
