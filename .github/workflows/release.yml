@@ -3,14 +3,13 @@ name: Release to PyPI
 on:
   release:
     types: [published]
-  
 
 jobs:
-  ci:
-    uses: ./.github/workflows/semantic_release.yml # Uses a different workflow file
+  semantic_release:
+    uses: ./.github/workflows/semantic_release.yml 
 
   release:
-    needs: ci  # Wait for CI to complete
+    needs: semantic_release  
     runs-on: ubuntu-latest
     
     steps:
