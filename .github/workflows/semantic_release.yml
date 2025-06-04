@@ -4,6 +4,7 @@ name: Semantic Release
 on:
   push:
     branches: [ main ]
+  workflow_call: # to allow trigger of this workflow from other workflows
 
 jobs:
   # Call the CI workflow first
