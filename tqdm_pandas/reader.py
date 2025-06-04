@@ -59,24 +59,45 @@ def _wrap_file(file, desc=None):
         return TqdmFileReader(file, desc=desc)
     return file
 
-def read_csv_with_progress_std(source, desc=None, **kwargs):
-    with _wrap_file(source, desc=desc or "Reading CSV") as f:
-        return pd.read_csv(f, **kwargs)
 
-def read_json_with_progress_std(source, desc=None, **kwargs):
-    with _wrap_file(source, desc=desc or "Reading JSON") as f:
-        return pd.read_json(f, **kwargs)
+def create_progress_readers(original_functions):
+    """Create progress-enabled readers that use the original pandas functions."""
+    
+    def read_csv_with_progress(source, desc=None, **kwargs):
+        with _wrap_file(source, desc=desc or "Reading CSV") as f:
+            return original_functions['read_csv'](f, **kwargs)
 
-def read_table_with_progress_std(source, desc=None, **kwargs):
-    with _wrap_file(source, desc=desc or "Reading Table") as f:
-        return pd.read_table(f, **kwargs)
+    def read_json_with_progress(source, desc=None, **kwargs):
+        with _wrap_file(source, desc=desc or "Reading JSON") as f:
+            return original_functions['read_json'](f, **kwargs)
+
+    def read_table_with_progress(source, desc=None, **kwargs):
+        with _wrap_file(source, desc=desc or "Reading Table") as f:
+            return original_functions['read_table'](f, **kwargs)
+        
+    def read_excel_with_progress(source, desc=None, **kwargs):
+        with _wrap_file(source, desc=desc or "Reading Excel") as f:
+            return original_functions['read_excel'](f, **kwargs)
+        
+    def read_parquet_with_progress(source, desc=None, **kwargs):
+        if isinstance(source, str):
+            file_size = _get_file_size(source)
+            if file_size:
+                with tqdm(total=file_size, unit='B', unit_scale=True, desc=desc or "Reading Parquet") as pbar:
+                    result = original_functions['read_parquet'](source, **kwargs)
+                    pbar.update(file_size)  # Complete the bar
+                    return result
+            else:
+                return original_functions['read_parquet'](source, **kwargs)
+        else:
+            return original_functions['read_parquet'](source, **kwargs)
     
-def read_excel_with_progress_std(source, desc=None, **kwargs):
-    with _wrap_file(source, desc=desc or "Reading Excel") as f:
-        return pd.read_excel(f, **kwargs)
-    
-def read_parquet_with_progress_std(source, desc=None, **kwargs):
-    with _wrap_file(source, desc=desc or "Reading Parquet") as f:
-        return pd.read_parquet(f, **kwargs)
-    
+    return {
+        'read_csv': read_csv_with_progress,
+        'read_json': read_json_with_progress,
+        'read_table': read_table_with_progress,
+        'read_excel': read_excel_with_progress,
+        'read_parquet': read_parquet_with_progress,
+    }
+
     
