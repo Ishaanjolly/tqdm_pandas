@@ -1,0 +1,27 @@
+[project]
+
+name = "tqdm-pandas"
+version = "0.1.0"
+description = "Progress bar for pandas file reading operationa"
+authors = [
+    {name = "IshaanJolly",email = "ijolly1997@gmail.com"}
+]
+keywords = ["pandas", "progress", "tqdm"]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "pandas>=1.0.0",
+    "tqdm>=4.0.0",
+]
+[tool.setuptools.packages.find]
+where = ["tqdm_pandas"]
+
+[tool.setuptools.package-dir]
+"" = "tqdm_pandas"
+
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+
