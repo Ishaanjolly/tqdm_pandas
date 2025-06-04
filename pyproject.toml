@@ -24,4 +24,38 @@ where = ["tqdm_pandas"]
 requires = ["setuptools>=45", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.semantic_release]
+# Version management
+version_toml = ["pyproject.toml:tool.poetry.version"]
+version_variables = [
+    "opttest/__init__.py:__version__"
+
+# Branch configuration
+branch = "main"
+upload_to_vcs_release = true
+
+# Changelog configuration
+changelog_file = "CHANGELOG.md"
+changelog_placeholder = "<!--next-version-->"
+
+# Commit message parsing
+commit_parser = "angular"
+logging_use_named_masks = false
+
+# Remote configuration
+[tool.semantic_release.remote]
+name = "origin"
+type = "github"
+
+# Commit message template
+[tool.semantic_release.commit_author]
+env = "GIT_COMMIT_AUTHOR"
+default = "semantic-release <semantic-release>"
+
+# Version pattern
+[tool.semantic_release.commit_parser_options]
+allowed_tags = ["build", "chore", "ci", "docs", "feat", "fix", "perf", "style", "refactor", "test"]
+minor_tags = ["feat"]
+patch_tags = ["fix", "perf"]
+
 
