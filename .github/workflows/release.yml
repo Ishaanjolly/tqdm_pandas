@@ -5,11 +5,11 @@ on:
       branches: [main]
 
 jobs:
-  semantic_release:
+  ci:
     uses: ./.github/workflows/semantic_release.yml 
 
   release:
-    needs: semantic_release  
+    needs: ci  
     runs-on: ubuntu-latest
     
     steps:
