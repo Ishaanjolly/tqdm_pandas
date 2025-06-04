@@ -1,0 +1,22 @@
+name: Test publish
+
+on:
+  push:
+    branches: [main, dev ]
+  release:
+    types: [published]
+  
+jobs:
+  test-publish:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Check secrets
+      run: |
+        if [ -z "${{ secrets.TEST_PYPI_API_TOKEN }}" ]; then
+          echo "TEST_PYPI_API_TOKEN secret is not set"
+          exit 1
+        else
+          echo "TEST_PYPI_API_TOKEN secret is available"
+        fi
