@@ -1,10 +1,9 @@
 [project]
-
 name = "tqdm-pandas"
-version = "0.1.0.dev1"
-description = "Progress bar for pandas file reading operationa"
+dynamic = ["version"]  # Version comes from git tags
+description = "Progress bar for pandas file reading operations"
 authors = [
-    {name = "IshaanJolly",email = "ijolly1997@gmail.com"}
+    {name = "IshaanJolly", email = "ijolly1997@gmail.com"}
 ]
 keywords = ["pandas", "progress", "tqdm"]
 license = {text = "MIT"}
@@ -14,44 +13,31 @@ dependencies = [
     "pandas>=1.0.0",
     "tqdm>=4.0.0",
 ]
-[tool.setuptools.packages.find]
-where = ["tqdm_pandas"]
-
-[tool.setuptools.package-dir]
-"" = "tqdm_pandas"
 
 [build-system]
-requires = ["setuptools>=45", "wheel"]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
-[tool.semantic_release]
-# Version management
-version_toml = ["pyproject.toml:tool.poetry.version"]
-version_variables = [
-    "tqdm_pandas/__init__.py:__version__"]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["tqdm_pandas*"]
 
-# Branch configuration
+[tool.setuptools_scm]
+write_to = "tqdm_pandas/_version.py"
+
+[tool.semantic_release]
+# No version_toml or version_variables needed!
+# semantic-release will just create tags, setuptools_scm reads them
 branch = "main"
 upload_to_vcs_release = true
-
-# Changelog configuration
 changelog_file = "CHANGELOG.md"
-
-# Commit message parsing
 commit_parser = "angular"
 logging_use_named_masks = false
 
-# Remote configuration
 [tool.semantic_release.remote]
 name = "origin"
 type = "github"
 
-# Commit message template
-[tool.semantic_release.commit_author]
-env = "GIT_COMMIT_AUTHOR"
-default = "semantic-release <semantic-release>"
-
-# Version pattern
 [tool.semantic_release.commit_parser_options]
 allowed_tags = ["build", "chore", "ci", "docs", "feat", "fix", "perf", "style", "refactor", "test"]
 minor_tags = ["feat"]
@@ -60,5 +46,3 @@ patch_tags = ["fix", "perf"]
 [tool.semantic_release.publish]
 dist_glob_patterns = ["dist/*"]
 upload_to_vcs_release = true
-
-
