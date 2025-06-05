@@ -70,6 +70,7 @@ jobs:
       - name: Build and publish to PyPI
         run: |
           # Only build and publish if a new tag was created
+          pip install build twine
           if git describe --tags --exact-match HEAD >/dev/null 2>&1; then
             echo "New release detected, building and publishing..."
             python -m build
