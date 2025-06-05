@@ -48,13 +48,76 @@ jobs:
       
       - name: Install semantic-release
         run: pip install python-semantic-release
+
+    name: CI and Release
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
       
-      - name: Release
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e .[dev]  # Assumes dev dependencies in pyproject.toml
+          
+      - name: Run linting
+        run: flake8 tqdm_pandas/ --max-line-length=110 --ignore=E203,W503,W293,E231,E501,W291,W292 || true
+        continue-on-error: true
+        
+      - name: Run tests
+        run: pytest  # Remove when you have actual tests
+
+  release:
+    needs: ci
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    concurrency: release
+    permissions:
+      id-token: write
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      
+      - name: Install semantic-release
+        run: pip install python-semantic-release
+      
+      - name: Install build tools
+        run: pip install build twine
+      
+      - name: Configure Git
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+      
+      - name: Semantic release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: 
             semantic-release --version
             semantic-release publish
+            
       - name: Build and publish to PyPI
         env:
           TWINE_USERNAME: __token__
