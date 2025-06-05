@@ -53,7 +53,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: 
-            semnatic-release --version
+            semantic-release --version
             semantic-release publish
       - name: Build and publish to PyPI
         env:
