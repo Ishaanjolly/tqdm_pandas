@@ -52,5 +52,20 @@ jobs:
       - name: Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          PYPI_TOKEN: ${{ secrets.PYPI_API_TOKEN }}
-        run: semantic-release publish
+        run: 
+            semnatic-release --version
+            semantic-release publish
+      - name: Build and publish to PyPI
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          # Only build and publish if a new tag was created
+          if git describe --tags --exact-match HEAD >/dev/null 2>&1; then
+            echo "New release detected, building and publishing..."
+            python -m build
+            twine check dist/*
+            twine upload dist/* --verbose
+          else
+            echo "No new release, skipping PyPI upload"
+          fi
