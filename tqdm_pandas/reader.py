@@ -107,7 +107,7 @@ class TqdmFileReader:
         bool
             True if the file supports reading, False otherwise
         """
-        return self.file.readable()
+        return self.file.readable
 
     @property
     def seekable(self) -> bool:
@@ -119,7 +119,7 @@ class TqdmFileReader:
         bool
             True if the file supports seeking, False otherwise
         """
-        return self.file.seekable()
+        return self.file.seekable
 
     # =============================
         
