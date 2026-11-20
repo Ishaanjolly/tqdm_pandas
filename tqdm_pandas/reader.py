@@ -72,6 +72,56 @@ class TqdmFileReader:
     def __exit__(self, *args):
         """Close progress bar on exit"""
         self.pbar.close()
+
+    # COMPATIBILITY LAYER FUNCTIONS
+
+    def seek(self, offset:int, whence:int=0):
+        """
+        Move the file pointer to a new position
+
+        Returns
+        -------
+        int
+            New position in the file in bytes
+        """
+        return self.file.seek(offset, whence)
+
+    def tell(self) -> int:
+        """
+        Return the current file position
+
+        Returns
+        -------
+        int
+            Current position in the file in bytes
+        """
+        return self.file.tell()
+
+    @property
+    def readable(self) -> bool:
+        """
+        Return whether the file is readable
+
+        Returns
+        -------
+        bool
+            True if the file supports reading, False otherwise
+        """
+        return self.file.readable
+
+    @property
+    def seekable(self) -> bool:
+        """
+        Return whether the file is seekable
+
+        Returns
+        -------
+        bool
+            True if the file supports seeking, False otherwise
+        """
+        return self.file.seekable
+
+    # =============================
         
     def read(self, size: int=-1):
         """
