@@ -8,7 +8,8 @@ on:
 
 jobs:
   ci:
-    runs-on: ubuntu-latest
+    # Pin the runner to an image with Python 3.9 builds available.
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
       
@@ -30,7 +31,8 @@ jobs:
 
   release:
     needs: ci
-    runs-on: ubuntu-latest
+    # Keep this aligned with CI for Python 3.9 compatibility.
+    runs-on: ubuntu-22.04
     concurrency: release
 
     steps:
