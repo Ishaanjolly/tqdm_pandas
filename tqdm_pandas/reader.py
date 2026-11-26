@@ -1,6 +1,8 @@
 import os
 from tqdm import tqdm
 
+import fsspec
+
 def _get_file_size(file):
     """
     Get file size if possible
@@ -193,7 +195,8 @@ def _wrap_file(file:object, desc:str=None):
         is not applicable
     """
     if isinstance(file, str):
-        return TqdmFileReader(open(file, 'rb'), desc=desc)
+        file = fsspec.open(file, 'rb').open()
+        return TqdmFileReader(file, desc=desc)
     elif hasattr(file, 'read'):
         return TqdmFileReader(file, desc=desc)
     return file
